@@ -14,7 +14,11 @@ private class OptimisePartsTest {
   @isTest
   static void main()
   {
-    List<GeneticAlgorithmThing> optimalSolution = new OptimiseParts(things, 0.05, 0.5, 100).execute(50);
+    List<GeneticAlgorithmThing> optimalSolution = new OptimiseParts(things)
+      .setMutationRate(0.05)
+      .setCrossoverRate(0.5)
+      .setWeightLimit(100)
+      .execute(50);
 
     for (GeneticAlgorithmThing thing : optimalSolution)
     {
