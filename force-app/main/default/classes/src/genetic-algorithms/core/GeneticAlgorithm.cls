@@ -13,26 +13,28 @@ public abstract class GeneticAlgorithm {
   protected Integer weightLimit;
   private List<GeneticAlgorithmGenome> population;
 
-  public GeneticAlgorithm() {
-    this(new List<GeneticAlgorithmThing>(), 0, 0, 0);
+  public GeneticAlgorithm (List<GeneticAlgorithmThing> things) {
+    this.things = things;
+    this.mutationRate = 0;
+    this.crossoverRate = 0;
+    this.populationSize = things.size() * 2;
+    this.weightLimit = 0;
+    this.population = new List<GeneticAlgorithmGenome>();
   }
 
-  public GeneticAlgorithm (
-    List<GeneticAlgorithmThing> things,
-    Decimal mr,
-    Decimal cr,
-    Integer wl
-  ) {
-    if (things == null || things.isEmpty()) {
-      throw new ListException('List of GeneticAlgorithmThings cannot be empty.');
-    }
+  public GeneticAlgorithm setMutationRate(Decimal mutationRate) {
+    this.mutationRate = mutationRate;
+    return this;
+  }
 
-    this.things = things;
-    this.mutationRate = mr;
-    this.crossoverRate = cr;
-    this.populationSize = things.size() * 2;
-    this.weightLimit = wl;
-    this.population = new List<GeneticAlgorithmGenome>();
+  public GeneticAlgorithm setCrossoverRate(Decimal crossoverRate) {
+    this.crossoverRate = crossoverRate;
+    return this;
+  }
+
+  public GeneticAlgorithm setWeightLimit(Integer weightLimit) {
+    this.weightLimit = weightLimit;
+    return this;
   }
 
   /**
