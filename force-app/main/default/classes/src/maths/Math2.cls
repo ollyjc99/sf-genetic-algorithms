@@ -18,7 +18,7 @@ public class Math2 {
 
   public static List<Integer> randomChoices(List<Integer> choices, Integer k)
   {
-    return (List<Integer>) randomChoicesANY(choices, k);
+    return (List<Integer>) randomChoices((List<Object>) choices, k);
   }
   
   /**
@@ -26,7 +26,7 @@ public class Math2 {
     @description Function to return a random selection of choices given an array and integer k
     @created     04-06-2024
   */
-  public static List<Object> randomChoicesANY(List<Object> choices, Integer k)
+  public static List<Object> randomChoices(List<Object> choices, Integer k)
   {
     if (choices == null || choices.isEmpty()) {
       throw new ListException('List argument cannot be empty.');
