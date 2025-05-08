@@ -88,15 +88,16 @@ public class Math2 {
     if (startIndex > itemArray.size()) {
       throw new IllegalArgumentException('Start index cannot be greater than array length.');
     }
+    if (startIndex == 0 && endIndex == itemArray.size()) {
+      return itemArray;
+    }
 
     for (Integer i = 0; i < startIndex; i++) { itemArray.remove(0); }
 
-    Integer remainingItemCount = endIndex - startIndex + 1;
+    Integer finalArraySize = endIndex - startIndex + 1;
     
-    while (itemArray.size() > remainingItemCount) 
-    {
-      itemArray.remove(remainingItemCount);
-    }
+    while (itemArray.size() > finalArraySize)  { itemArray.remove(itemArray.size() - 1); }
+
     return itemArray;
   }
 
