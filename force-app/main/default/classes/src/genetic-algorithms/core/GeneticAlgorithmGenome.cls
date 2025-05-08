@@ -9,10 +9,6 @@ public class GeneticAlgorithmGenome implements Comparable {
   public List<Integer> dna;
   public Integer fitness;
 
-  public GeneticAlgorithmGenome(Object dna) {
-    this.dna = (List<Integer>) JSON.deserialize(JSON.serialize(dna), List<Integer>.class);
-  }
-
   public GeneticAlgorithmGenome(List<Integer> dna) {
     this.dna = dna;
   }
