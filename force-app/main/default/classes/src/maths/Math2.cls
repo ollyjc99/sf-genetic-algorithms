@@ -15,13 +15,18 @@ public class Math2 {
   {
     return Math.round(Math.random() * (itemArray.size() - 1));
   }
+
+  public static List<Integer> randomChoices(List<Integer> choices, Integer k)
+  {
+    return (List<Integer>) randomChoicesANY(choices, k);
+  }
   
   /**
-  * @author      Oliver Carter
-  * @description Function to return a random selection of choices given an array and integer k
-  * @created     04-06-2024
+    @author      Oliver Carter
+    @description Function to return a random selection of choices given an array and integer k
+    @created     04-06-2024
   */
-  public static List<Object> randomChoices(List<Object> choices, Integer k)
+  public static List<Object> randomChoicesANY(List<Object> choices, Integer k)
   {
     if (choices == null || choices.isEmpty()) {
       throw new ListException('List argument cannot be empty.');
@@ -30,7 +35,8 @@ public class Math2 {
       throw new IllegalArgumentException('K cannot be less than or equal to 0 or null.');
     }
 
-    List<Object> returnList = new List<Object>();
+    List<Object> returnList = choices.clone();
+    returnList.clear();
 
     for (Integer i = 0; i < k; i++)
     {
@@ -64,6 +70,16 @@ public class Math2 {
     @description Function to splice an array given a start and end
     @created     04-06-2024
   */
+  public static List<Integer> splice(List<Integer> itemArray, Integer startIndex, Integer endIndex)
+  {
+    return (List<Integer>) splice((List<Object>) itemArray, startIndex, endIndex);
+  }
+
+  /**
+    @author      Oliver Carter
+    @description Function to splice an array given a start and end
+    @created     04-06-2024
+  */
   public static List<Object> splice(List<Object> itemArray, Integer startIndex, Integer endIndex)
   {
     if (startIndex > endIndex) {
@@ -73,17 +89,15 @@ public class Math2 {
       throw new IllegalArgumentException('Start index cannot be greater than array length.');
     }
 
-    List<Object> clonedArray = itemArray.clone();
-    for (Integer i = 0; i < startIndex; i++)
-    {
-      clonedArray.remove(0);
-    }
+    for (Integer i = 0; i < startIndex; i++) { itemArray.remove(0); }
+
     Integer remainingItemCount = endIndex - startIndex + 1;
-    while (clonedArray.size() > remainingItemCount) 
+    
+    while (itemArray.size() > remainingItemCount) 
     {
-      clonedArray.remove(remainingItemCount);
+      itemArray.remove(remainingItemCount);
     }
-    return clonedArray;
+    return itemArray;
   }
 
 }
