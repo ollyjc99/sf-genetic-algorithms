@@ -1,8 +1,6 @@
 public class OptimiseParts extends GeneticAlgorithm {
 
-  public OptimiseParts (List<Thing> things, Decimal mr, Decimal cr, Integer wl) {
-    super(things, mr, cr, wl);
-  }
+  public OptimiseParts (List<Thing> things) { super(things); }
 
   public override Integer calculateFitness(List<Integer> dna)
   {
