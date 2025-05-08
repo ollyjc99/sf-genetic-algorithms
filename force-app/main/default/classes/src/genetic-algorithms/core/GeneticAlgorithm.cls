@@ -162,7 +162,9 @@ public abstract class GeneticAlgorithm {
       return new List<GeneticAlgorithmGenome> {a, b};
     }
     
-    Integer p = Math2.randomIndex(this.things);
+    Integer p = 0;
+    
+    while (p == 0) { p = Math2.randomIndex(this.things); }
 
     GeneticAlgorithmGenome bitSwappedA = new GeneticAlgorithmGenome(Math2.splice(a.dna, 0, p));
     GeneticAlgorithmGenome bitSwappedB = new GeneticAlgorithmGenome(Math2.splice(b.dna, 0, p));
