@@ -115,7 +115,7 @@ public abstract class GeneticAlgorithm {
       @param       Integer defining the length of the genome to create
       @created     04-06-2024
   */
-  public List<Object> generateGeneticAlgorithmGenome(Integer length)
+  public List<Integer> generateGeneticAlgorithmGenome(Integer length)
   {
     return Math2.randomChoices(new List<Integer> {0, 1}, length);
   }
