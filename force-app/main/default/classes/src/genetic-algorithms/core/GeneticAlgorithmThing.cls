@@ -17,5 +17,5 @@ public abstract class GeneticAlgorithmThing {
     this.value = value;
     this.weight = weight;
   }
-  
+
 }
