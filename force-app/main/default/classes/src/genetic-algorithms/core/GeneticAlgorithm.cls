@@ -11,7 +11,7 @@ public abstract class GeneticAlgorithm {
   private Decimal mutationRate;
   private Decimal crossoverRate;
   protected Integer weightLimit;
-  private List<Genome> population;
+  private List<GeneticAlgorithmGenome> population;
 
   public GeneticAlgorithm() {
     this(new List<GeneticAlgorithmThing>(), 0, 0, 0);
@@ -32,7 +32,7 @@ public abstract class GeneticAlgorithm {
     this.crossoverRate = cr;
     this.populationSize = things.size() * 2;
     this.weightLimit = wl;
-    this.population = new List<Genome>();
+    this.population = new List<GeneticAlgorithmGenome>();
   }
 
   /**
@@ -46,27 +46,27 @@ public abstract class GeneticAlgorithm {
     this.generatePopulation(this.things.size());
 
     Integer fitnessTotal = 0;
-    for (Genome genome : this.population) { fitnessTotal += genome.fitness; }
+    for (GeneticAlgorithmGenome genome : this.population) { fitnessTotal += genome.fitness; }
 
     System.debug('Starting fitness average: ' + fitnessTotal / this.population.size());
 
     for (Integer i = 0; i < evolutions; i++)
     {
-      List<Genome> nextGeneration = new List<Genome>();
+      List<GeneticAlgorithmGenome> nextGeneration = new List<GeneticAlgorithmGenome>();
 
       for (Integer j = 0; j < this.population.size() / 2; j++)
       {
-        Genome parentX = this.generateTournament();
-        Genome parentY = this.generateTournament();
+        GeneticAlgorithmGenome parentX = this.generateTournament();
+        GeneticAlgorithmGenome parentY = this.generateTournament();
 
-        List<Genome> childGenomes = this.singlePointCrossover(parentX, parentY);
+        List<GeneticAlgorithmGenome> childGeneticAlgorithmGenomes = this.singlePointCrossover(parentX, parentY);
 
-        nextGeneration.addAll(childGenomes);
+        nextGeneration.addAll(childGeneticAlgorithmGenomes);
       }
       this.population.addAll(nextGeneration);
 
       fitnessTotal = 0;
-      for (Genome genome : this.population)
+      for (GeneticAlgorithmGenome genome : this.population)
       {
         fitnessTotal += genome.fitness;
       }
@@ -90,15 +90,15 @@ public abstract class GeneticAlgorithm {
       @description Function to generate a tournament between two genomes
       @created     04-06-2024
   */
-  public Genome generateTournament()
+  public GeneticAlgorithmGenome generateTournament()
   {
     Integer x = Math2.randomIndex(this.population);
     Integer y = x;
 
     while (y == x) { y = Math2.randomIndex(this.population); }
 
-    Genome genomeX = this.population[x];
-    Genome genomeY = this.population[y];
+    GeneticAlgorithmGenome genomeX = this.population[x];
+    GeneticAlgorithmGenome genomeY = this.population[y];
 
     Integer genomeToRemove = genomeX.fitness >= genomeY.fitness ? y : x;
     
@@ -113,7 +113,7 @@ public abstract class GeneticAlgorithm {
       @param       Integer defining the length of the genome to create
       @created     04-06-2024
   */
-  public List<Object> generateGenome(Integer length)
+  public List<Object> generateGeneticAlgorithmGenome(Integer length)
   {
     return Math2.randomChoices(new List<Integer> {0, 1}, length);
   }
@@ -128,7 +128,7 @@ public abstract class GeneticAlgorithm {
   {
     for (Integer i = 0; i < this.populationSize; i++)
     {
-      Genome genome = new Genome(this.generateGenome(genomeLength));
+      GeneticAlgorithmGenome genome = new GeneticAlgorithmGenome(this.generateGeneticAlgorithmGenome(genomeLength));
       genome.fitness = this.calculateFitness(genome.dna);
 
       this.population.add(genome);
@@ -138,8 +138,8 @@ public abstract class GeneticAlgorithm {
   /**
       @author      Oliver Carter
       @description Abstract function to calculate the fitness of a genome
-      @param       List<Integer> Genome DNA
-      @return      Integer Fitness value of Genome
+      @param       List<Integer> GeneticAlgorithmGenome DNA
+      @return      Integer Fitness value of GeneticAlgorithmGenome
       @created     04-06-2024
   */
   public abstract Integer calculateFitness(List<Integer> dna);
@@ -147,26 +147,26 @@ public abstract class GeneticAlgorithm {
   /**
       @author      Oliver Carter
       @description Function to return the chromosomic section of two genomes
-      @param       Genome First genome for single point crossover
-      @param       Genome Second genome for single point crossover
+      @param       GeneticAlgorithmGenome First genome for single point crossover
+      @param       GeneticAlgorithmGenome Second genome for single point crossover
       @created     04-06-2024
   */
-  public List<Genome> singlePointCrossover(Genome a, Genome b)
+  public List<GeneticAlgorithmGenome> singlePointCrossover(GeneticAlgorithmGenome a, GeneticAlgorithmGenome b)
   {
     if (a.dna.size() != b.dna.size()) {
-      throw new IllegalArgumentException('Genomes must be the same length.');
+      throw new IllegalArgumentException('GeneticAlgorithmGenomes must be the same length.');
     }
     if (a.dna.size() < 2) {
-      return new List<Genome> {a, b};
+      return new List<GeneticAlgorithmGenome> {a, b};
     }
     
     Integer p = Math2.randomIndex(this.things);
 
-    Genome bitSwappedA = new Genome(Math2.splice(a.dna, 0, p));
-    Genome bitSwappedB = new Genome(Math2.splice(b.dna, 0, p));
+    GeneticAlgorithmGenome bitSwappedA = new GeneticAlgorithmGenome(Math2.splice(a.dna, 0, p));
+    GeneticAlgorithmGenome bitSwappedB = new GeneticAlgorithmGenome(Math2.splice(b.dna, 0, p));
 
-    Genome bitSwappedA2 = new Genome(Math2.splice(b.dna, p + 1, b.dna.size()));
-    Genome bitSwappedB2 = new Genome(Math2.splice(a.dna, p + 1, a.dna.size()));
+    GeneticAlgorithmGenome bitSwappedA2 = new GeneticAlgorithmGenome(Math2.splice(b.dna, p + 1, b.dna.size()));
+    GeneticAlgorithmGenome bitSwappedB2 = new GeneticAlgorithmGenome(Math2.splice(a.dna, p + 1, a.dna.size()));
 
     bitSwappedA.dna.addAll(bitSwappedA2.dna);
     bitSwappedB.dna.addAll(bitSwappedB2.dna);
@@ -174,7 +174,7 @@ public abstract class GeneticAlgorithm {
     bitSwappedA.fitness = this.calculateFitness(bitSwappedA.dna);
     bitSwappedB.fitness = this.calculateFitness(bitSwappedB.dna);
     
-    return new List<Genome> {
+    return new List<GeneticAlgorithmGenome> {
       this.mutate(bitSwappedA),
       this.mutate(bitSwappedB)
     };
@@ -183,42 +183,16 @@ public abstract class GeneticAlgorithm {
   /**
       @author      Oliver Carter
       @description Function to randomly mutate a genome bit if a random float is less than the mutation rate
-      @param       Genome Genome to randomly mutate
+      @param       GeneticAlgorithmGenome GeneticAlgorithmGenome to randomly mutate
       @created     04-06-2024
   */
-  public Genome mutate(Genome genome)
+  public GeneticAlgorithmGenome mutate(GeneticAlgorithmGenome genome)
   {
     Integer index = Math.round(Math.random() * (genome.dna.size() - 1));
 
     genome.dna[index] = Math.random() > this.mutationRate ? genome.dna[index] : Math.abs(genome.dna[index] - 1);
 
     return genome;
-  }
-
-  /**
-      @author      Oliver Carter
-      @description Wrapper Class for Genomes
-      @created     04-06-2024
-      @version     1.0
-  */
-  public class Genome implements Comparable {
-
-    public List<Integer> dna;
-    public Integer fitness;
-
-    public Genome(Object dna) {
-      this.dna = (List<Integer>) JSON.deserialize(JSON.serialize(dna), List<Integer>.class);
-    }
-
-    public Genome(List<Integer> dna) {
-      this.dna = dna;
-    }
-
-    public Integer compareTo(Object compareTo)
-    {
-      Integer compareToFitness = ((Genome) compareTo).fitness;
-      return this.fitness > compareToFitness ? -1 : this.fitness < compareToFitness ? 1 : 0;
-    }
   }
 
 }
